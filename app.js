@@ -1,4 +1,19 @@
 const request = require('request');
+const yargs = require('yargs');
+
+const argv = yargs.options({
+    a:{
+        demand : true,
+        alias:'address',
+        describe: 'given address weather to be found',
+        string: true
+    }
+})
+.help()
+.alias('help','h')
+.argv;
+
+let address = argv.address;
 
 request({
     url: 'https://maps.googleapis.com/maps/api/geocode/json?address=house%20no.%2015%20sector%202c%20gurgaon%20haryana%20india',
