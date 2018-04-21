@@ -13,10 +13,11 @@ const argv = yargs.options({
 .alias('help','h')
 .argv;
 
-let address = argv.address;
+let encodedAddress = encodeURIComponent(argv.address);
 
+console.log(encodedAddress)
 request({
-    url: 'https://maps.googleapis.com/maps/api/geocode/json?address=house%20no.%2015%20sector%202c%20gurgaon%20haryana%20india',
+    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}`,
     json: true
 },(error, response, body)=>{
     if(error){
