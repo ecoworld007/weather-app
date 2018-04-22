@@ -9,18 +9,18 @@ const argv = yargs.options({
         string: true
     }
 })
+.default('address',"delhi")
 .help()
 .alias('help','h')
 .argv;
-//added default value for address if no input is provided
-let address = argv.address || 'Delhi';
-geocode.geocodeAddress(address)
+
+geocode.geocodeAddress(argv.address)
 .then((results) => {
     console.log(results.address);
     return  weather.getWeather(results.location.lat, results.location.lng);
 })
 .then((weatherResults) => {
-    console.log(JSON.stringify(weatherResults,undefined,2));
+    console.log(`Currently its ${weatherResults.temperature} but feels like ${weatherResults.apparentTemperature} temperature.`);
 })
 .catch((error) => {
     console.log(errormessage);

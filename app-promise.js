@@ -8,12 +8,12 @@ const argv = yargs.options({
         string: true
     }
 })
+.default('address',"delhi")
 .help()
 .alias('help','h')
 .argv;
-//added default value for address if no input is provided
-let address = argv.address || 'Delhi';
-let encodedAddress = encodeURIComponent(address);
+
+let encodedAddress = encodeURIComponent(argv.address);
 let geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${process.env.GOOGLE_MAP_API_KEY}`;
 
 axios.get(geocodeUrl).then((response) => {
@@ -26,7 +26,7 @@ axios.get(geocodeUrl).then((response) => {
     let weatherUrl = `https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/${lat},${lng}`;
     return axios.get(weatherUrl);
 }).then((weatherResults) => {
-    console.log(`Currently its ${weatherResults.data.currently.temperature} but feels like ${weatherResults.data.currently.apparentTemperature} temperature.`);    
+    console.log(`Currently its ${weatherResults.data.currently.temperature} but feels like ${weatherResults.data.currently.apparentTemperature} temperature.`);
 },(error) => {
     throw new Error('Unable to fetch temperature for that address');
 }).catch((error) => {
