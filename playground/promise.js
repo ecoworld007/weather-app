@@ -10,7 +10,7 @@ let asynAdd = (a, b) => {
     });
 }
 
-asynAdd(true,5).then((result) => {
+asynAdd(2,5).then((result) => {
     console.log(`Result: ${result}`);
     return asynAdd(result,3);
 },(error) => {
@@ -26,18 +26,18 @@ asynAdd(true,5).then((result) => {
     console.log(error)
 });
 
-// let somePromise = new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//         //Promise can be resolved or rejected only once.
-//         console.log('called first')
-//         resolve('It worked.');    
-//         reject('Not happening!')
-//     }, 2500);
-// });
+let somePromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        //Promise can be resolved or rejected only once.
+        console.log('called first')
+        resolve('It worked.');    
+        reject('Not happening!')
+    }, 2500);
+});
 
-// somePromise.then((message) => {
-//     console.log('Success: ', message);
-// })
-// .catch((error) => {
-//     console.log('Failed: ',error);
-// })
+somePromise.then((message) => {
+    console.log('Success: ', message);
+})
+.catch((error) => {
+    console.log('Failed: ',error);
+})
