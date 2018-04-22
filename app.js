@@ -13,18 +13,14 @@ const argv = yargs.options({
 .alias('help','h')
 .argv;
 
-geocode.geocodeAddress(argv.address,(errormessage, results) => {
-    if(errormessage){
-        console.log(errormessage);
-    } else{
-        console.log(results.address)
-        weather.getWeather(results.location.lat, results.location.lng, (errormessage, weatherResults) => {
-            if(errormessage){
-                console.log(errormessage);
-            } else{
-                console.log(JSON.stringify(weatherResults,undefined,2));
-            }
-        })
-    }
+geocode.geocodeAddress(argv.address)
+.then((results) => {
+    console.log(results.address);
+    return  weather.getWeather(results.location.lat, results.location.lng);
+})
+.then((weatherResults) => {
+    console.log(JSON.stringify(weatherResults,undefined,2));
+})
+.catch((error) => {
+    console.log(errormessage);
 });
-
