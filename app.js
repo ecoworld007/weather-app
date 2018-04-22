@@ -3,7 +3,7 @@ const geocode = require('./geocode/geocode');
 const weather = require('./weather/weather')
 const argv = yargs.options({
     a:{
-        demand : true,
+        demand : false,
         alias:'address',
         describe: 'given address weather to be found',
         string: true
@@ -12,8 +12,9 @@ const argv = yargs.options({
 .help()
 .alias('help','h')
 .argv;
-
-geocode.geocodeAddress(argv.address)
+//added default value for address if no input is provided
+let address = argv.address || 'Delhi';
+geocode.geocodeAddress(address)
 .then((results) => {
     console.log(results.address);
     return  weather.getWeather(results.location.lat, results.location.lng);
